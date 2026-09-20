@@ -10,6 +10,10 @@ class Customer(models.Model):
     email_address = models.EmailField(max_length=30, blank=True, default="")
     account = models.FloatField(blank=True, null=True)
 
+#   Hiermit können wir die ausgabe der shell besser machen, schöner
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
+
 
 
 # Product -> MANY in der Many-to-Many Beziehung mit Order
@@ -33,7 +37,8 @@ class Bill(models.Model):
     total_amount = models.FloatField()
     is_paid = models.BooleanField(default=False)
 
-
+    def __str__(self):
+        return f"{self.name} ({self.price})"
 
 
 # Order -> MANY in der One-to-Many Beziehung mit Customer
@@ -82,7 +87,8 @@ class Producttype(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     type_name = models.CharField(max_length=30) 
     
-
+    def __str__(self):
+        return f"{self.type_name}"
 
 
 
