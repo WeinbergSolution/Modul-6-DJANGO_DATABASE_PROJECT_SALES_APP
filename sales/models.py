@@ -31,7 +31,7 @@ class Product(models.Model):
 class Bill(models.Model):
 
     total_amount = models.FloatField()
-    ist_paid = models.BooleanField(default=False)
+    is_paid = models.BooleanField(default=False)
 
 
 
