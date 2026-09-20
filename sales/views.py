@@ -23,7 +23,20 @@ class CustomerListSearchView(CustomerListView):
         return Customer.objects.filter(first_name__icontains=name)
 
 
+from django.utils import timezone
+
 class CustomerDetailView(DetailView):
     model = Customer
     template_name = "sales/detail.html"
+
+    def get_object(self):
+        obj = super().get_object()
+
+        # hier bekommen wir die komplete time raus, wird in der detail.html ausgegeben, wichtig wird nur angezeigt aber nicht in der db 
+        # gesichert 
+        obj.last_accessed = timezone.now()
+        return obj
+
+
+
     
