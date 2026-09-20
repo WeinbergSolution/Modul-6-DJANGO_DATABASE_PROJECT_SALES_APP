@@ -8,6 +8,19 @@ class Customer(models.Model):
     email_address = models.EmailField(max_length=30, blank=True, default="")
     account = models.FloatField(blank=True, null=True)
 
+
+
+class Product(models.Model):
+#   Macht es sin das Product eine Liste von Order hat = nein
+#   Macht es sinn das Orders eine Liste von Product hat = ja
+#       daher implementieren wir in Order die liste von Product.
+
+    name = models.CharField(max_length=30)
+    price = models.FloatField()
+
+
+
+
 class Order(models.Model):
 #   Ein Customer kann mehrer Orders haben, ein Order aber nur einen Customer
 
@@ -24,4 +37,32 @@ class Order(models.Model):
 #   on_delete=models.CASCADE = 
 #   wenn der Customer gelöscht wird, wird auch die Order gelöscht
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+
+#   Hier geben wir der classe Orders eine Liste von Product mit
+#   Wichtig: Die class Product muss vor Order definiert sein, wegen der 
+#   Erbung, sont ist der Parameter (Product) undefiniert.   
+# 
+#   through="Producttype" sagt Django: Für die Many-to-Many-Beziehung soll ein 
+#   eigenes Zwischenmodel verwendet werden. Dadurch können wir zusätzliche 
+#   Informationen zur Beziehung speichern – hier type_name.
+    products = models.ManyToManyField(Product, through="Producttype")
+
+
+
+class Producttype(models.Model):
+#   Man kann mehrer classen verketten mit (through()), welches in der zwischen
+#   classe gesetzt werden muss, in dem fall in Order
+
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    type_name = models.CharField(max_length=30) 
+    
+
+
+
+
+
+
+class Bill(models.Model):
+    pass
     
