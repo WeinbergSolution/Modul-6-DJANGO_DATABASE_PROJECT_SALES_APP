@@ -3,8 +3,12 @@ from django.db import models
 # Customer -> ONE in der One-to-Many Beziehung mit Order
 # Ein Customer kann mehrere Orders haben.
 # Customer 1 → n Order
+
+#   help_text wird unter dem eingabefeld im Adminpanel ein Hinweistext 
+#   eingebelndet.
+#   error_messages zeigt fehler an z.b bei validation
 class Customer(models.Model):
-    first_name = models.CharField(max_length=30)
+    first_name = models.CharField(max_length=30,error_messages="hoppla",help_text='max 30 letters, dummy')
     last_name = models.CharField(max_length=30)
     newsletter_abo = models.BooleanField(default=True)
     email_address = models.EmailField(max_length=30, blank=True, default="")
