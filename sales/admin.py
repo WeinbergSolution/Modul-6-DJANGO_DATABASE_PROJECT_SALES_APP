@@ -18,7 +18,8 @@ class CustomerAdmin(admin.ModelAdmin):
 
 #   ermöglicht es das die eingaben aus dem Feld firstname & lastname, 
 #   automatisch in das slugfeld übernommen werden & slugify gemacht werden.
-    prepopulated_fields={'slug':['first_name', 'last_name']}
+
+#    prepopulated_fields={'slug':['first_name', 'last_name']}
 
 #   wir nehmen das feld slug mit unter advance option mit auf um es zu 
 #   prepopulaten.
@@ -32,8 +33,8 @@ class CustomerAdmin(admin.ModelAdmin):
         (
             "Advanced options",
             {
-                "classes": ['collapse'],
-                'fields': ['newsletter_abo', 'slug'],
+                "classes": ['collapse'],    
+                'fields': ['newsletter_abo'], # 'slug' raus ab sektion 4
             },
         ),
     ]

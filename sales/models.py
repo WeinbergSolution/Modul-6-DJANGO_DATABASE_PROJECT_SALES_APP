@@ -8,12 +8,17 @@ from django.db import models
 #   eingebelndet.
 #   error_messages zeigt fehler an z.b bei validation
 class Customer(models.Model):
-    first_name = models.CharField(max_length=30,error_messages="hoppla",help_text='max 30 letters, dummy')
+    #ab sektion 4 ohne error und help_text
+    # first_name = models.CharField(max_length=30,error_messages="hoppla",help_text='max 30 letters, dummy')
+    first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     newsletter_abo = models.BooleanField(default=True)
     email_address = models.EmailField(max_length=30, blank=True, default="")
     account = models.FloatField(blank=True, null=True)
-    slug = models.SlugField(blank=True, default="")
+
+
+#   ab sektion 4 ohne slug
+#   slug = models.SlugField(blank=True, default="")
 
 
 
@@ -28,10 +33,10 @@ class Customer(models.Model):
 # verbose_name_plural bestimmt den Namen in der Mehrzahl.
 
 
-    class Meta:
-        verbose_name= 'Customer'
-        verbose_name_plural= 'Customers'
-        ordering=['-first_name']
+    # class Meta:
+    #     verbose_name= 'Customer'
+    #     verbose_name_plural= 'Customers'
+    #     ordering=['-first_name']
 
 
 
@@ -53,9 +58,11 @@ class Customer(models.Model):
 
 #   Wichtig ist nur: Wenn save() überschrieben wird, sollte man *args, **kwargs 
 #   mitnehmen und an super().save() weitergeben.
-def save(self):
-    self.account = 651681
-    return super().save()
+
+
+# def save(self):
+#     self.account = 651681
+#     return super().save()
 
 
 
@@ -71,6 +78,8 @@ class Product(models.Model):
     name = models.CharField(max_length=30)
     price = models.FloatField()
 
+    def __str__(self):
+        return f"{self.name} ({self.price})"
 
 
 # Bill -> ONE in der One-to-One Beziehung mit Order
@@ -81,8 +90,9 @@ class Bill(models.Model):
     total_amount = models.FloatField()
     is_paid = models.BooleanField(default=False)
 
-    def __str__(self):
-        return f"{self.name} ({self.price})"
+#   ab sektion 4 ausgegraut
+    # def __str__(self):
+    #     return f"{self.name} ({self.price})"
 
 
 # Order -> MANY in der One-to-Many Beziehung mit Customer
