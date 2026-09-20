@@ -10,9 +10,48 @@ class Customer(models.Model):
     email_address = models.EmailField(max_length=30, blank=True, default="")
     account = models.FloatField(blank=True, null=True)
 
+
+
+# In der models.py können wir über die Meta-Klasse
+# zusätzliche Einstellungen für unser Model festlegen.
+
+#   verbose_name_plural = ermöglicht 
+# ordering bestimmt die Standardsortierung.
+# Das "-" vor first_name bedeutet absteigend.
+
+# verbose_name bestimmt den Namen eines einzelnen Objekts.
+# verbose_name_plural bestimmt den Namen in der Mehrzahl.
+
+
+    class Meta:
+        verbose_name= 'Customer'
+        verbose_name_plural= 'Customers'
+        ordering=['-first_name']
+
+
+
+
+
 #   Hiermit können wir die ausgabe der shell besser machen, schöner
+#   Zeitgleich hat es ein einfluss auf die visualisierung im AdminPanel
+#   In dem fall das first und lastname angezeigt werden bei jedem einzelnen 
+#   Eintrag
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
+
+
+
+
+#   damit lässt sich die save Funtion überschreiben wenn ich im AdminPanel das 
+#   Account feld ausfülle und auf save klicke. 
+#   Background color für user Profile z.b. random generiern z.b.
+
+#   Wichtig ist nur: Wenn save() überschrieben wird, sollte man *args, **kwargs 
+#   mitnehmen und an super().save() weitergeben.
+def save(self):
+    self.account = 651681
+    return super().save()
+
 
 
 

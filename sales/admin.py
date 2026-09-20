@@ -32,6 +32,11 @@ class CustomerAdmin(admin.ModelAdmin):
     ]
 
 
+#   Ermöglicht es, das bei der erstellung in account nix eingetragen werden darf
+#   sprich nur readonley , nur lesen.
+    readonly_fields = ['account']
+
+
 
 
 
