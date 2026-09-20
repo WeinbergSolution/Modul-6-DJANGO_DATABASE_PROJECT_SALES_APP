@@ -9,6 +9,7 @@ class Customer(models.Model):
     newsletter_abo = models.BooleanField(default=True)
     email_address = models.EmailField(max_length=30, blank=True, default="")
     account = models.FloatField(blank=True, null=True)
+    slug = models.SlugField(blank=True, default="")
 
 
 
