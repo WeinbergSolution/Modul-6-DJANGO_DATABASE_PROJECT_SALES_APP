@@ -1,6 +1,8 @@
 from django.db import models
 
-# Create your models here.
+# Customer -> ONE in der One-to-Many Beziehung mit Order
+# Ein Customer kann mehrere Orders haben.
+# Customer 1 → n Order
 class Customer(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
@@ -9,6 +11,9 @@ class Customer(models.Model):
     account = models.FloatField(blank=True, null=True)
 
 
+
+# Product -> MANY in der Many-to-Many Beziehung mit Order
+# Ein Product kann in mehreren Orders vorkommen.
 
 class Product(models.Model):
 #   Macht es sin das Product eine Liste von Order hat = nein
@@ -20,6 +25,20 @@ class Product(models.Model):
 
 
 
+# Bill -> ONE in der One-to-One Beziehung mit Order
+# Eine Bill kann genau einer Order zugeordnet sein.
+
+class Bill(models.Model):
+
+    total_amount = models.FloatField()
+    ist_paid = models.BooleanField(default=False)
+
+
+
+
+# Order -> MANY in der One-to-Many Beziehung mit Customer
+# Order <-> Product = Many-to-Many
+# Order <-> Bill = One-to-One
 
 class Order(models.Model):
 #   Ein Customer kann mehrer Orders haben, ein Order aber nur einen Customer
@@ -40,14 +59,20 @@ class Order(models.Model):
 
 #   Hier geben wir der classe Orders eine Liste von Product mit
 #   Wichtig: Die class Product muss vor Order definiert sein, wegen der 
-#   Erbung, sont ist der Parameter (Product) undefiniert.   
+#   Beziehung, sont ist der Parameter (Product) undefiniert.   
 # 
 #   through="Producttype" sagt Django: Für die Many-to-Many-Beziehung soll ein 
 #   eigenes Zwischenmodel verwendet werden. Dadurch können wir zusätzliche 
 #   Informationen zur Beziehung speichern – hier type_name.
     products = models.ManyToManyField(Product, through="Producttype")
 
+#   Verbindet es über den ForeignKey mit Bill
+    bill = models.OneToOneField(Bill, on_delete=models.CASCADE)
 
+
+
+# Producttype -> Zwischenmodel der Many-to-Many Beziehung
+# Verbindet Order und Product miteinander und speichert zusätzliche Daten.
 
 class Producttype(models.Model):
 #   Man kann mehrer classen verketten mit (through()), welches in der zwischen
@@ -63,6 +88,5 @@ class Producttype(models.Model):
 
 
 
-class Bill(models.Model):
-    pass
+
     
